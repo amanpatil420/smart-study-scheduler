@@ -1,0 +1,21 @@
+[debug] [2025-06-28T09:44:57.322Z] ----------------------------------------------------------------------
+[debug] [2025-06-28T09:44:57.324Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\patil\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2025-06-28T09:44:57.325Z] CLI Version:   14.8.0
+[debug] [2025-06-28T09:44:57.325Z] Platform:      win32
+[debug] [2025-06-28T09:44:57.325Z] Node Version:  v20.17.0
+[debug] [2025-06-28T09:44:57.325Z] Time:          Sat Jun 28 2025 15:14:57 GMT+0530 (India Standard Time)
+[debug] [2025-06-28T09:44:57.325Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-06-28T09:44:57.481Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-28T09:44:57.482Z] > authorizing via signed-in user (patilaman94077@gmail.com)
+[debug] [2025-06-28T09:44:57.482Z] [iam] checking project smart-study-scheduler-44318 for permissions ["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2025-06-28T09:44:57.483Z] Checked if tokens are valid: true, expires at: 1751107477975
+[debug] [2025-06-28T09:44:57.483Z] Checked if tokens are valid: true, expires at: 1751107477975
+[debug] [2025-06-28T09:44:57.484Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/smart-study-scheduler-44318:testIamPermissions [none]
+[debug] [2025-06-28T09:44:57.484Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/smart-study-scheduler-44318:testIamPermissions x-goog-quota-user=projects/smart-study-scheduler-44318
+[debug] [2025-06-28T09:44:57.484Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/smart-study-scheduler-44318:testIamPermissions {"permissions":["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2025-06-28T09:44:59.721Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/smart-study-scheduler-44318:testIamPermissions 200
+[debug] [2025-06-28T09:44:59.722Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/smart-study-scheduler-44318:testIamPermissions {"permissions":["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2025-06-28T09:44:59.722Z] Checked if tokens are valid: true, expires at: 1751107477975
+[debug] [2025-06-28T09:44:59.722Z] Checked if tokens are valid: true, expires at: 1751107477975
+[debug] [2025-06-28T09:44:59.723Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/smart-study-scheduler-44318 [none]

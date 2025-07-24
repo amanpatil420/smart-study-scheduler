@@ -1,63 +1,60 @@
-import React, { useState, useEffect } from "react";
-import TaskForm from "../components/TaskForm";
-import TaskCard from "../components/TaskCard";
-import { scheduleTasks } from "../utils/scheduleAlgo";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../firebase"; // Adjust path if needed
 
 const Schedule = () => {
+  const [user, loading, error] = useAuthState(auth);
   const [tasks, setTasks] = useState([]);
-  const userId = "demo-user";
-
-  const fetchTasks = async () => {
-    const res = await fetch(`/api/tasks?userId=${userId}`);
-    const data = await res.json();
-    setTasks(data);
-  };
-
-  const addTask = async (task) => {
-    await fetch("/api/tasks", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(task),
-    });
-    fetchTasks();
-  };
-
-  const deleteTask = async (id) => {
-    await fetch(`/api/tasks/${id}`, { method: "DELETE" });
-    fetchTasks();
-  };
-
-  const getNext7Days = () => {
-    const days = [];
-    const today = new Date();
-    for (let i = 0; i < 7; i++) {
-      const d = new Date(today);
-      d.setDate(today.getDate() + i);
-      days.push(d);
-    }
-    return days;
-  };
-
-  const applyAutoFill = () => {
-    const scheduled = scheduleTasks(tasks, getNext7Days());
-    setTasks(scheduled);
-  };
+  const [fetchError, setFetchError] = useState(null);
 
   useEffect(() => {
+    const fetchTasks = async () => {
+      if (!user) return;
+
+      try {
+        console.log("👉 Fetching tasks for user:", user.uid);
+        const response = await axios.get(`/api/tasks?userId=${user.uid}`);
+        setTasks(response.data);
+        console.log("✅ Tasks fetched:", response.data);
+      } catch (err) {
+        console.error("❌ Error fetching tasks:", err);
+        setFetchError("Failed to load tasks. Please try again later.");
+      }
+    };
+
     fetchTasks();
-  }, []);
+  }, [user]);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Weekly Scheduler</h1>
-      <TaskForm onAdd={addTask} />
-      <button onClick={applyAutoFill} className="mb-4 bg-green-600 text-white px-4 py-2 rounded">Auto-Fill Schedule</button>
+      <h1 className="text-2xl font-bold mb-4">📅 Your Weekly Schedule</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {tasks.map((task) => (
-          <TaskCard key={task._id} task={task} onDelete={deleteTask} />
-        ))}
-      </div>
+      {fetchError && <p className="text-red-500">{fetchError}</p>}
+
+      {tasks.length === 0 ? (
+        <p>No tasks scheduled.</p>
+      ) : (
+        <ul className="space-y-2">
+          {tasks.map((task) => (
+            <li
+              key={task._id}
+              className="p-4 bg-white shadow-md rounded-md border border-gray-200"
+            >
+              <p className="font-semibold text-lg">{task.title}</p>
+              <p className="text-sm text-gray-600">
+                Subject: {task.subject} | Difficulty: {task.difficulty}
+              </p>
+              <p className="text-sm text-gray-500">
+                Deadline: {new Date(task.deadline).toLocaleDateString()}
+              </p>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

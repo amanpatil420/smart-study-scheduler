@@ -1,26 +1,22 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+// firebase/config.js
+import { initializeApp, getApps, getApp } from "firebase/app";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// ✅ Your Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyAf-eT2zkJOt6UBjOUWu3yMcLrFzdKayrs",
   authDomain: "smart-study-scheduler-44318.firebaseapp.com",
   projectId: "smart-study-scheduler-44318",
-  storageBucket: "smart-study-scheduler-44318.firebasestorage.app",
+  storageBucket: "smart-study-scheduler-44318.appspot.com",
   messagingSenderId: "297129328785",
   appId: "1:297129328785:web:293838faa1f9fe42253f30",
-  measurementId: "G-6KTP7LKF3S"
+  measurementId: "G-6KTP7LKF3S",
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+// ✅ Fix: Prevent duplicate Firebase App initialization
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 
-
-
-//npm install -g firebase-tools
+export { auth, provider };
